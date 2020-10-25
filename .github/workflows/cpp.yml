@@ -18,7 +18,7 @@ jobs:
         cmake --build . --target install --config Debug
       shell: bash
     - name: Inspector
-      run: C:/licensecc/bin/DEFAULT/lccinspector.exe
+      run: C:/licensecc/bin/test/lccinspector.exe
       shell: bash
     - name: Test
       env:
@@ -31,6 +31,4 @@ jobs:
     - name: The job has failed
       if: ${{ failure() }}
       run: |
-        echo $TMP
-        echo $TEMP
-        type $TMP/open-license.log
+        type $TEMP/open-license.log
