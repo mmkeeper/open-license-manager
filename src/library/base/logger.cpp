@@ -29,7 +29,7 @@ static void timenow(char * buffer) {
 static void getLogFname(char* logpath) {
 #ifdef __unix__
 	const char *folder = getenv("TMPDIR");
-	if (folder == 0) {
+	if (folder == nullptr) {
 		folder = "/tmp";
 	}
 	strncpy(logpath, folder, MAX_PATH);
@@ -51,13 +51,11 @@ void _log(const char* format, ...) {
 		getLogFname(logpath);
 		logFile = fopen(logpath, "a");
 		if (logFile == NULL) {
-			//what shall we do here?
 			return;
 		}
 	}
 	buffer = (char *) malloc(sizeof(char) * strlen(format) + 64);
 	timenow(buffer);
-	sprintf(&buffer[strlen(buffer) - 1], "-[%d]-", getpid());
 	strcat(buffer, format);
 	va_start(args, format);
 	vfprintf(logFile, buffer, args);

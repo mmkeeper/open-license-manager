@@ -1,30 +1,33 @@
 name: CI
-on:
-   push: 
+
+on: 
+  push:
+
 jobs:
-   build-windows:
-      runs-on: ${{ matrix.os }}
-      strategy:
-        fail-fast: false
-        matrix:
-          build_type: ["Debug", "Release"]
-          os: ["windows-2019", "windows-2016"]
-      steps:
-      -  uses: actions/checkout@v1
-      -  name: Setup 
-         shell: bash
-         run: echo "BOOST_ROOT=$BOOST_ROOT_1_72_0" >> $GITHUB_ENV
-      -  name: Compile
-         run: |
-            cd build
-            cmake ..
-            cmake --build . --target install --config ${{ matrix.build_type }}
-         shell: bash
-      -  name: Test
-         run: |
-            cd build 
-            ctest -C ${{ matrix.build_type }}
-         shell: bash
-         env:
-            CTEST_OUTPUT_ON_FAILURE: 1
-            VIRTUAL_ENV: VM
+  build-windows-vc2019:
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Boost (Windows / Linux latest)
+      shell: bash
+      run: echo "BOOST_ROOT=$BOOST_ROOT_1_72_0" >> $GITHUB_ENV
+    - name: Compile
+      run: |
+        cd build
+        cmake -G "Visual Studio 16 2019" -DLCC_PROJECT_NAME:STRING=test -DCMAKE_BUILD_TYPE=DEBUG ..
+        cmake --build . --target install --config Debug
+      shell: bash
+    - name: Inspector
+      run: out/build/x86-Debug/src/inspector/Debug/lccinspector.exe
+      shell: bash
+    - name: Test
+      env:
+        CTEST_OUTPUT_ON_FAILURE: 1
+        VIRTUAL_ENV: VM
+      run: |
+        cd build 
+        ctest -C Debug
+      shell: bash
+    - name: The job has failed
+      if: ${{ failure() }}
+      run: type %TMP%\open-license.log

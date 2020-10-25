@@ -80,7 +80,7 @@ EventRegistry LicenseReader::readLicenses(const string &product, vector<FullLice
 			 *  sw_version_to = (optional int)
 			 *  from_date = YYYY-MM-DD (optional)
 			 *  to_date  = YYYY-MM-DD (optional)
-			 *  client_signature = XXXX-XXXX-XXXX-XXXX (optional string 16)
+			 *  client_signature = XXXX-XXXX-XXXX (optional string 16)
 			 *  sig = XXXXXXXXXX (mandatory, 1024)
 			 *  application_data = xxxxxxxxx (optional string 16)
 			 */
@@ -117,7 +117,7 @@ string FullLicenseInfo::printForSign() const {
 		}
 	}
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 	cout << "license to sign [" << oss.str() << "]" << endl;
 #endif
 	return oss.str();

@@ -1,0 +1,30 @@
+name: CI
+on:
+   push: 
+jobs:
+   build-windows:
+      runs-on: ${{ matrix.os }}
+      strategy:
+        fail-fast: false
+        matrix:
+          build_type: ["Debug", "Release"]
+          os: ["windows-2019", "windows-2016"]
+      steps:
+      -  uses: actions/checkout@v1
+      -  name: Setup 
+         shell: bash
+         run: echo "BOOST_ROOT=$BOOST_ROOT_1_72_0" >> $GITHUB_ENV
+      -  name: Compile
+         run: |
+            cd build
+            cmake ..
+            cmake --build . --target install --config ${{ matrix.build_type }}
+         shell: bash
+      -  name: Test
+         run: |
+            cd build 
+            ctest -C ${{ matrix.build_type }}
+         shell: bash
+         env:
+            CTEST_OUTPUT_ON_FAILURE: 1
+            VIRTUAL_ENV: VM

@@ -30,6 +30,9 @@ the software has been copied to another pc.
 
 A comprehensive :ref:`list of features <analysis/features:Features>`, and their status is available in the project wiki. 
 
+If you're experiencing problems, or you just need informations you can't find here in the documentation,
+please contact us on the `user forum <https://groups.google.com/forum/#!forum/licensecc>`_ (hosted on Google), we'll be happy to help. 
+
 License (BSD)
 **************
 The project is donated to the community. It comes with a very large freedom of use for everyone, and it will always be. 
@@ -41,7 +44,7 @@ Project Structure
 *******************
 The software is made by 4 main sub-components:
 
-* ``licensecc``    : the C++ library with a C api (the part you have to integrate in your software) with minimal (or no) external dependencies. This is the project you're currently looking at.
+* `licensecc`    : the C++ library with a C api (the part you have to integrate in your software) with minimal (or no) external dependencies. This is the project you're currently looking at.
 * ``lccinspector`` : a license debugger to be sent to the final customer to diagnose licensing problems or for calculating the hardware id before issuing the license.
 * ``lccgen``       : a license generator (github project `lcc-license-generator`_ ) to initialize the library and generate the licenses.
 * ``examples``     : usage samples (github project `examples <https://github.com/open-license-manager/examples>`_ ).
@@ -116,7 +119,7 @@ On Windows (MSVC):
 
 How to use
 **************
-The `examples`_ repository shows various ways to integrate ``licensecc`` into your project.
+The `examples`_ repository shows various ways to integrate `licensecc` into your project.
 
 .. _examples: https://github.com/open-license-manager/examples 
 
