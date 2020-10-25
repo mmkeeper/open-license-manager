@@ -14,11 +14,11 @@ jobs:
     - name: Compile
       run: |
         cd build
-        cmake -G "Visual Studio 16 2019" -DLCC_PROJECT_NAME:STRING=test -DCMAKE_BUILD_TYPE=DEBUG ..
+        cmake -G "Visual Studio 16 2019" -DLCC_PROJECT_NAME:STRING=test -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_INSTALL_PREFIX=C:/licensecc ..
         cmake --build . --target install --config Debug
       shell: bash
     - name: Inspector
-      run: "C:/Program Files (x86)/licensecc/bin/test/lccinspector.exe"
+      run: C:/licensecc/bin/DEFAULT/lccinspector.exe
       shell: bash
     - name: Test
       env:
@@ -31,7 +31,6 @@ jobs:
     - name: The job has failed
       if: ${{ failure() }}
       run: |
-        echo {{ runner.temp }}
         echo $TMP
         echo $TEMP
-        type {{ runner.temp }}/open-license.log
+        type $TMP/open-license.log
